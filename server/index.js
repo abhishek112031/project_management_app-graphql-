@@ -1,5 +1,7 @@
 const express=require('express');
 // var { ruruHTML } = require("ruru/server")
+const mongoose=require('mongoose');
+const connectTOMongoDB=require('./db/database.js')
 require('dotenv').config();
 const schema=require('./schema/schema.js')
 
@@ -25,8 +27,11 @@ app.use(
 }))
 
 
-app.listen(port,()=>{
-    console.log(`Application listening on ${port}...`);
-})
+app.listen(process.env.PORT, () => {
+    connectTOMongoDB()
+  //   mongoose.connect("mongodb://0.0.0.0:27017/mern_chat_app");
+    mongoose.connect(process.env.MONGO_URI)
+    console.log(`listening on port ${process.env.PORT}...`);
+  });
 
 
