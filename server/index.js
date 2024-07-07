@@ -1,5 +1,7 @@
 const express=require('express');
 // var { ruruHTML } = require("ruru/server")
+
+const cors = require('cors')
 const mongoose=require('mongoose');
 const connectTOMongoDB=require('./db/database.js')
 require('dotenv').config();
@@ -16,6 +18,8 @@ const app=express();
 //   res.type("html")
 //   res.end(ruruHTML({ endpoint: "/graphql" }))
 // })
+
+app.use(cors())
 
 
 app.use(
