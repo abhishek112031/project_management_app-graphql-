@@ -1,7 +1,15 @@
 import React from 'react'
-import {FaTrash} from 'react-icons/fa'
+import {FaTrash} from 'react-icons/fa';
+import { useMutation } from '@apollo/client';
+import { DELETE_CLIENT } from '../mutations/clientMutations';
+import { GET_CLIENTS } from '../queries/clientQueries';
 
 const ClientRow = ({client}) => {
+  const [deleteClient] = useMutation(DELETE_CLIENT,{
+    variables:{id:client.id},
+    refetchQueries:[{query: GET_CLIENTS}],//delete frm uI instantly
+    onError: (error) => console.log(error),
+  });
   return (
     <tr>
         <td>
@@ -14,7 +22,7 @@ const ClientRow = ({client}) => {
         {client.phone}
         </td>
         <td>
-            <button className='btn btn-danger btn-sm'>
+            <button className='btn btn-danger btn-sm' onClick={deleteClient}>
                 <FaTrash/>
             </button>
 

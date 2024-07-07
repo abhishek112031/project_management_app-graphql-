@@ -1,28 +1,16 @@
 import React from 'react';
-import {gql,useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import ClientRow from './ClientRow';
+import Spinner from './Spinner';
 
-const GET_CLIENTS = gql`
-query getClients {
-  clients{
-    id,
-    phone,
-    name,
-    email
-  }
-
-}
+import { GET_CLIENTS } from '../queries/clientQueries';
 
 
-`  
 
 const Clients = () => {
    const {loading , error ,data}= useQuery(GET_CLIENTS);
-   console.log('data-------->',data)
-   if(loading) return <p>loading...</p>
+   if(loading) return <Spinner/>
    if(error) return <p>error...</p>
-
-
   return (
     <div>
        {
@@ -39,14 +27,6 @@ const Clients = () => {
                 </thead>
                 <tbody>
                     {data.clients.map((client) => (
-                        // <tr key={client.id}>
-                        //     <td>{client.name}</td>
-                        //     <td>{client.email}</td>
-                        //     <td>{client.phone}</td>
-                        //     <td> 
-                        //         <button className='btn btn-sm btn-danger'>Delete</button>
-                        //     </td>
-                        // </tr>
                         <ClientRow key={client.id} client={client}/>
                     ))}
                 </tbody>
